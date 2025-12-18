@@ -17,7 +17,29 @@ const sock = makeWASocket({
 }); sock.ev.on("creds.update", saveCreds);
 
 const users = {};
+const sock = makeWASocket({
+  auth: state
+});
 
+sock.ev.on("creds.update", saveCreds);
+
+// 🔳 QR + CONNECTION HANDLER (YAHI LAGANA HAI)
+sock.ev.on("connection.update", (update) => {
+  const { qr, connection } = update;
+
+  if (qr) {
+    console.log("🔳 Scan this QR Code:");
+    console.log(qr);
+  }
+
+  if (connection === "open") {
+    console.log("✅ WhatsApp Connected Successfully");
+  }
+
+  if (connection === "close") {
+    console.log("❌ Connection Closed");
+  }
+});
 sock.ev.on("messages.upsert", async ({ messages }) => { const msg = messages[0]; if (!msg.message || msg.key.fromMe) return;
 
 const from = msg.key.remoteJid;
