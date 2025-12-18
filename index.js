@@ -1,4 +1,4 @@
-const http = require("http");
+9const http = require("http");
 
 http.createServer((req, res) => {
   res.writeHead(200, { "Content-Type": "text/plain" });
@@ -32,8 +32,23 @@ async function startBot() {
 
     if (qr) {
       console.log("Scan this QR Code:");
-      console.log(qr);
-    }
+    sock.ev.on("connection.update", (update) => {
+  const { connection, qr } = update;
+
+  if (qr) {
+    console.log("\n================ QR CODE ================\n");
+    console.log(qr);
+    console.log("\nScan this QR from WhatsApp > Linked Devices\n");
+  }
+
+  if (connection === "open") {
+    console.log("✅ WhatsApp Connected Successfully");
+  }
+
+  if (connection === "close") {
+    console.log("❌ Connection Closed");
+  }
+});
 
     if (connection === "open") {
       console.log("✅ WhatsApp Connected Successfully");
