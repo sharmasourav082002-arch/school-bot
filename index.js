@@ -8,18 +8,14 @@ http.createServer((req, res) => {
 const { default: makeWASocket, useMultiFileAuthState } = require("@whiskeysockets/baileys"); const axios = require("axios");
 
 // 🔴 CHANGE THESE VALUES const ADMIN_NUMBER = "447448071922@s.whatsapp.net"; // अपना WhatsApp नंबर डालें const GOOGLE_SHEET_URL = ""; // अभी खाली छोड़ सकते हैं
-
 async function startBot() { const { state, saveCreds } = await useMultiFileAuthState("auth");
 
 const sock = makeWASocket({
-  auth: state
-});
-}); sock.ev.on("creds.update", saveCreds);
-
-const users = {};
 const sock = makeWASocket({
-  auth: state
-});
+    auth: state
+  });
+
+  sock.ev.on("creds.update", saveCreds);
 
 sock.ev.on("creds.update", saveCreds);
 
